@@ -8,7 +8,6 @@ module Auth
       User.find(decode_user)
     rescue
       render json: { message: "Please login to continue"}, status: :unauthorized
-      return false
     end
 
   end
@@ -16,6 +15,7 @@ module Auth
   def authenticate_user
     unless current_user
       render json: { message: "Please login to continue"}, status: :unauthorized
+      return false
     end
   end
 
@@ -27,9 +27,6 @@ module Auth
     end
   end
 
-  def encode payload
-    token = JWT.encode payload, Rails.application.credentials.secret_key_base, 'HS256'
-  end
 
   def decode_user
     return false unless token_from_request_headers

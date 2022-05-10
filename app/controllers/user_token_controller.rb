@@ -9,7 +9,7 @@ class UserTokenController < ApplicationController
     end
 
     render json: {
-        jwt: encode({ sub: user.id }),
+        jwt: TokenGenerator.call( {sub: user.id} ),
         user: {
           name: "#{user.first_name} #{user.last_name}",
         }

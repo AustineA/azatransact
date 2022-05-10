@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "UserTokens", type: :request do
+RSpec.describe "Authentication", type: :request do
 
   before do
     User.create(
@@ -17,7 +17,7 @@ RSpec.describe "UserTokens", type: :request do
       post "/user_token", params:{ auth: { email: "austine.amah@gmail.com", password: "123456"}}
       expect(response).to have_http_status(:created)
       expect(response.body).to include("jwt", "user")
-      puts response.body
+      # puts response.body
     end
 
   end
