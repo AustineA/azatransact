@@ -4,7 +4,7 @@ class UserTokenController < ApplicationController
     user = auth_from_password
 
     unless user
-      render json: {}, status: 404
+      render json: { message: "User not found" }, status: 404
       return
     end
 
