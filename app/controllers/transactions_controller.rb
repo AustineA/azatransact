@@ -9,9 +9,13 @@ class TransactionsController < ApplicationController
   def create
     begin
       ActiveRecord::Base.transaction do
-        output_amount = CurrencyConverter.call( transaction_params[:input_amount], transaction_params[:input_currency], transaction_params[:output_currency])
-        @transaction = current_user.transactions.create!( transaction_params.merge( output_amount: output_amount["result"] ))
-
+        output_amount = CurrencyConverter.call( 
+          transaction_params[:input_amount], 
+          transaction_params[:input_currency], 
+          transaction_params[:output_currency]
+          )["result"] unless transaction_params[:output_amount].present?
+          
+        @transaction = current_user.transactions.create!( derived_params(output_amount) )
         render :show, status: 200
       end
     rescue StandardError => e
@@ -22,6 +26,10 @@ class TransactionsController < ApplicationController
   def show; end
 
   private
+
+  def derived_params( output_amount )
+    output_amount ? transaction_params.merge( output_amount: output_amount ) : transaction_params
+  end
 
   def set_transaction
     @transaction = Transaction.find(params[:id])
