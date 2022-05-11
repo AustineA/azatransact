@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Transactions", type: :request do
-  let(:transaction_params) { { "input_amount" => 5000*100, "input_currency" => "NGN", "output_amount" => 12*100, "output_currency" => "USD"} }
+  let(:transaction_params) { { "input_amount" => 5000, "input_currency" => "USD", "output_currency" => "NGN"} }
 
   user = User.create!(
     password: "123456", 

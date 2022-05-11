@@ -31,11 +31,6 @@ RSpec.describe Transaction, type: :model do
       expect(subject).to_not be_valid
     end
 
-    it "cannot be  valid without an output_amount" do
-      subject.output_amount = nil
-      expect(subject).to_not be_valid
-    end
-
     it "cannot be  valid without an output_currency" do
       subject.output_currency = nil
       expect(subject).to_not be_valid
