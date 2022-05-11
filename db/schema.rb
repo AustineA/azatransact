@@ -17,9 +17,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_10_110253) do
 
   create_table "transactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "user_id"
-    t.bigint "input_amount", default: 0
+    t.decimal "input_amount", precision: 9, scale: 2, default: "0.0"
     t.string "input_currency", default: "NGN", null: false
-    t.bigint "output_amount", default: 0
+    t.decimal "output_amount", precision: 9, scale: 2, default: "0.0"
     t.string "output_currency", default: "USD", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
