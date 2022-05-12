@@ -34,7 +34,7 @@ class TransactionsController < ApplicationController
       transaction_params[:input_amount], 
       transaction_params[:input_currency], 
       transaction_params[:output_currency]
-    )["result"] unless transaction_params[:output_amount].present?
+    ) unless transaction_params[:output_amount].present?
 
     output_amount ? transaction_params.merge( output_amount: output_amount ) : transaction_params
     

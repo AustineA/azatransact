@@ -18,7 +18,7 @@ class CurrencyConverter < ApplicationService
 
     raise StandardError, response unless response["success"]
     
-    response
+    response["result"]
   end
 
   private
