@@ -8,7 +8,17 @@ class TransactionsController < ApplicationController
   
   def create
     begin
-      ActiveRecord::Base.transaction do        
+      ActiveRecord::Base.transaction do   
+
+        output_amount = CurrencyConverter.call( 
+          transaction_params[:input_amount], 
+          transaction_params[:input_currency], 
+          transaction_params[:output_currency]
+        ) unless transaction_params[:output_amount].present?   
+        
+        derived_params = transaction_params
+        derived_params[:output_amount] = output_amount if output_amount
+
         @transaction = current_user.transactions.create!( derived_params )
         render :show, status: 200
       end
@@ -29,14 +39,4 @@ class TransactionsController < ApplicationController
     params.require(:transaction).permit(:input_amount, :input_currency, :output_amount, :output_currency)
   end
 
-  def derived_params
-    output_amount = CurrencyConverter.call( 
-      transaction_params[:input_amount], 
-      transaction_params[:input_currency], 
-      transaction_params[:output_currency]
-    ) unless transaction_params[:output_amount].present?
-
-    output_amount ? transaction_params.merge( output_amount: output_amount ) : transaction_params
-    
-  end
 end
