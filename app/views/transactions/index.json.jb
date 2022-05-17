@@ -1,11 +1,19 @@
-@transactions.map do |transaction|
+t = @transactions.map do |transaction|
+  full_name = transaction.user.first_name ? "#{transaction.user.first_name} #{transaction.user.last_name}" : 'No name'
+
   {
     id: transaction.id,
+    payload_id: transaction.payload_id,
     input_amount: transaction.input_amount,
     input_currency: transaction.input_currency,
     output_amount: transaction.output_amount,
     output_currency: transaction.output_currency,
     user_id: transaction.user_id,
+    name: full_name,
     created_at: transaction.created_at,
   }
 end
+
+{
+  transactions: t
+}

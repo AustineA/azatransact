@@ -31,12 +31,13 @@ class TransactionsController < ApplicationController
 
   private
 
+ 
   def set_transaction
     @transaction = Transaction.find(params[:id])
   end
 
   def transaction_params
-    params.require(:transaction).permit(:input_amount, :input_currency, :output_amount, :output_currency)
+    params.require(:transaction).permit(:input_amount, :input_currency, :output_amount, :output_currency, :payload_id)
   end
 
 end
